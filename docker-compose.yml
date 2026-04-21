@@ -1,0 +1,31 @@
+services:
+  # 1. BỘ NÃO BACKEND (FastAPI)
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    volumes:
+      # Ánh xạ thư mục database để lưu dữ liệu RSVP bền vững
+      - ./database:/app/database
+    restart: always
+
+  # 2. GIAO DIỆN FRONTEND (Next.js)
+  frontend:
+    build:
+      context: ./frontend
+    env_file:
+      - .env
+    restart: always
+
+  # 3. CỔNG GATEWAY (Nginx)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - frontend
+    restart: always

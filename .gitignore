@@ -1,0 +1,40 @@
+# ==========================================
+# Graduation App - Git Ignore Strategy
+# ==========================================
+
+# --- PHP/Python/Node Dependencies ---
+node_modules/
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# --- Environment & Secrets (TUYỆT ĐỐI KHÔNG PUSH) ---
+.env
+.env.local
+.env.production
+*.env
+
+# --- Database (Bảo mật dữ liệu khách) ---
+database/*.db
+*.db
+*.sqlite3
+
+# --- Build Artifacts ---
+.next/
+dist/
+build/
+out/
+.docker-build/
+
+# --- IDE & OS Files ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- AI Context (Tùy chọn) ---
+.brain/
+.gemini/
+scripts/scratch/
