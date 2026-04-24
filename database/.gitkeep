@@ -1,0 +1,2 @@
+# File này giúp Git không xóa thư mục database dù nó rỗng.
+# Database thực sự (*.db) sẽ không được push lên để bảo mật.
