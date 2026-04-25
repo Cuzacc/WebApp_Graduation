@@ -1,0 +1,11 @@
+# Loại bỏ các thư mục nặng để build Docker nhanh hơn
+node_modules/
+frontend/node_modules/
+backend/venv/
+.next/
+frontend/.next/
+__pycache__/
+*.pyc
+.git/
+.vscode/
+database/*.db

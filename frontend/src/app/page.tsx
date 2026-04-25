@@ -53,7 +53,8 @@ export default function GraduationLanding() {
 
   useEffect(() => {
     // Tự động load dữ liệu đã duyệt khi vừa vào trang
-    fetch("http://localhost:8000/api/messages")
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+    fetch(`${API_URL}/api/messages`)
       .then(res => res.json())
       .then(data => setApprovedMessages(data))
       .catch(err => console.error("Error fetching messages:", err));
@@ -64,7 +65,8 @@ export default function GraduationLanding() {
     e.preventDefault();
     setMsgStatus(t.sendingStr);
     try {
-      const res = await fetch("http://localhost:8000/api/guestbook", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+      const res = await fetch(`${API_URL}/api/guestbook`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -89,7 +91,8 @@ export default function GraduationLanding() {
     e.preventDefault();
     setRsvpStatus(t.sendingStr);
     try {
-      const res = await fetch("http://localhost:8000/api/rsvp", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+      const res = await fetch(`${API_URL}/api/rsvp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

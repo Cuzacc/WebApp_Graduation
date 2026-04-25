@@ -9,6 +9,10 @@ import jwt
 import models, schemas, auth, mailer
 from database import engine, get_db
 from config import settings
+from init_db import init_database
+
+# Khởi tạo Database ngay khi code được load
+init_database()
 
 app = FastAPI(title="Graduation Web App API", description="Sức mạnh ngầm từ FastAPI và BackgroundTasks", version="1.0.0")
 
@@ -204,3 +208,7 @@ def delete_message_hard(msg_id: int, current_admin: models.Admin = Depends(get_c
     db.delete(msg)
     db.commit()
     return {"status": "success"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

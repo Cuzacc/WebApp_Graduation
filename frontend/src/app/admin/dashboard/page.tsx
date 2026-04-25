@@ -10,6 +10,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'PENDING' | 'LIVES' | 'TRASH'>('PENDING');
   const router = useRouter();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
   const fetchData = async () => {
     const token = localStorage.getItem("adminToken");
@@ -19,9 +20,9 @@ export default function AdminDashboard() {
     }
     try {
       const [resPending, resApproved, resTrash] = await Promise.all([
-        fetch("http://localhost:8000/api/admin/pending", { headers: { "Authorization": `Bearer ${token}` } }),
-        fetch("http://localhost:8000/api/admin/approved", { headers: { "Authorization": `Bearer ${token}` } }),
-        fetch("http://localhost:8000/api/admin/trash", { headers: { "Authorization": `Bearer ${token}` } })
+        fetch(`${API_URL}/api/admin/pending`, { headers: { "Authorization": `Bearer ${token}` } }),
+        fetch(`${API_URL}/api/admin/approved`, { headers: { "Authorization": `Bearer ${token}` } }),
+        fetch(`${API_URL}/api/admin/trash`, { headers: { "Authorization": `Bearer ${token}` } })
       ]);
 
       if (resPending.status === 401 || resApproved.status === 401 || resTrash.status === 401) {
@@ -47,7 +48,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("adminToken");
     if (!confirm("Xác nhận duyệt người này và TỰ ĐỘNG gửi email cảm ơn?")) return;
     try {
-      await fetch(`http://localhost:8000/api/admin/approve/guest/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/approve/guest/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -55,7 +56,7 @@ export default function AdminDashboard() {
   const approveMessage = async (id: number) => {
     const token = localStorage.getItem("adminToken");
     try {
-      await fetch(`http://localhost:8000/api/admin/approve/message/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/approve/message/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -64,7 +65,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("adminToken");
     if (!confirm("Ném RSVP này vào thùng rác?")) return;
     try {
-      await fetch(`http://localhost:8000/api/admin/reject/guest/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/reject/guest/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -73,7 +74,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("adminToken");
     if (!confirm("Ném lá thư này vào thùng rác?")) return;
     try {
-      await fetch(`http://localhost:8000/api/admin/reject/message/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/reject/message/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -81,7 +82,7 @@ export default function AdminDashboard() {
   const restoreGuest = async (id: number) => {
     const token = localStorage.getItem("adminToken");
     try {
-      await fetch(`http://localhost:8000/api/admin/restore/guest/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/restore/guest/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -89,7 +90,7 @@ export default function AdminDashboard() {
   const restoreMessage = async (id: number) => {
     const token = localStorage.getItem("adminToken");
     try {
-      await fetch(`http://localhost:8000/api/admin/restore/message/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/restore/message/${id}`, { method: "PUT", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -98,7 +99,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("adminToken");
     if (!confirm("Xóa VĨNH VIỄN RSVP này? Dữ liệu không thể khôi phục.")) return;
     try {
-      await fetch(`http://localhost:8000/api/admin/guest/${id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/guest/${id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
@@ -107,7 +108,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("adminToken");
     if (!confirm("Xóa VĨNH VIỄN bức thư này? Dữ liệu không thể khôi phục.")) return;
     try {
-      await fetch(`http://localhost:8000/api/admin/message/${id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token}` } });
+      await fetch(`${API_URL}/api/admin/message/${id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token}` } });
       fetchData();
     } catch (err) { console.error(err); }
   };
